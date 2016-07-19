@@ -27,12 +27,12 @@ import com.github.fge.jsonschema.core.ref.JsonRef;
 import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.tree.SchemaTree;
 import com.github.fge.jsonschema.processors.data.FullData;
-import com.google.common.collect.Queues;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
@@ -67,7 +67,7 @@ final class ValidationStack
     /*
      * Queue of visited contexts
      */
-    private final Deque<Element> validationQueue = Queues.newArrayDeque();
+    private final Deque<Element> validationQueue = new ArrayDeque<Element>();
 
     /*
      * Head error message when a validation loop is detected
@@ -121,7 +121,7 @@ final class ValidationStack
 
         validationQueue.addLast(new Element(pointer, schemaURIs));
         pointer = ptr;
-        schemaURIs = Queues.newArrayDeque();
+        schemaURIs = new ArrayDeque<SchemaURI>();
         schemaURIs.addLast(schemaURI);
     }
 
